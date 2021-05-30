@@ -1,4 +1,4 @@
-#%%
+# %%
 import matplotlib.pyplot as plt
 import numpy as np
 import mpmath
@@ -7,8 +7,9 @@ from sympy import sieve
 from sympy.ntheory import factorint
 from sympy.ntheory.factor_ import totient
 
+
 class QueryFactor:
-    def __init__(self, n, k_min = -1, k_max = -1):
+    def __init__(self, n, k_min=-1, k_max=-1):
         # factor
         self.n = n
         # minimum power (default -1 implies exclusion)
@@ -16,30 +17,33 @@ class QueryFactor:
         # maximum power (default -1 implies inf)
         self.k_max = k_max
 
+
 class QueryConfig:
     def __init__(self):
         self.range = 0
         self.tot_len = 0
         self.findTotient = False
 
+
 class Query:
     def __init__(self, config, factors):
         self.config = config
         self.factors = factors
+
 
 class QueryBuilder:
     def __init__(self):
         self.factors = dict()
         self.config = QueryConfig()
 
-    def include_totient(self, tot_len = -1):
+    def include_totient(self, tot_len=-1):
         self.config.findTotient = True
         self.config.tot_len = tot_len
 
     def set_range(self, range):
         self.config.range = range
 
-    def include_factor(self, n, k_min, k_max = -1):
+    def include_factor(self, n, k_min, k_max=-1):
         factor = QueryFactor(n, k_min, k_max)
         self.factors[n] = factor
 
@@ -51,11 +55,12 @@ class QueryBuilder:
         query = Query(self.config, self.factors)
         return query
 
+
 class QueryResult:
     def __init__(self, integers):
         self.integers = integers
 
-    def flatten_totient(self):
+    def flatten_totient(self):S
         totient_set = dict()
         for i in self.integers.keys():
             v = self.integers[i]
@@ -106,6 +111,7 @@ class QueryResult:
                 time_data.append(i)
         return (n_data, tot_data, time_data)
 
+
 class FactorResult:
     def __init__(self, n, k, totient):
         # factor
@@ -115,11 +121,13 @@ class FactorResult:
         # totient
         self.totient = totient
 
+
 class IntegerResult:
     def __init__(self, n, factors, totient):
         self.n = n
         self.factors = factors
         self.totient = totient
+
 
 class ResultBuilder:
     def __init__(self, query):
@@ -162,6 +170,7 @@ class ResultBuilder:
         self.result = QueryResult(self.integers)
         return self.result
 
+
 def exp_red(n):
     lg = math.floor(math.log2(n))
     p = []
@@ -175,11 +184,13 @@ def exp_red(n):
             p.append(i)
     return p
 
+
 def exp_eval(ls):
     n = 0
     for i in ls:
         n = n + (2 ** i)
     return n
+
 
 def exp_scale(n, ls):
     ret = []
@@ -187,11 +198,13 @@ def exp_scale(n, ls):
         ret.append(i + n)
     return ret
 
+
 def is_pow_2(n):
     factors = factorint(n)
     if len(factors.keys()) == 1 and factors.keys().__contains__(2):
         return True
     return False
+
 
 def totient_log(n):
     n_spare = n
@@ -202,11 +215,13 @@ def totient_log(n):
         tlog = tlog + 1
     return tlog
 
+
 def totient_log_range(n):
     ret = dict()
     for i in range(2, n):
         ret[i] = totient_log(i)
     return ret
+
 
 def plot_totient_log_stats(n):
     ls = totient_log_range(n)
@@ -218,8 +233,9 @@ def plot_totient_log_stats(n):
         disp[v] = disp[v] + 1
     x = list(disp.keys())
     y = list(disp.values())
-    plt.scatter(x,y)
+    plt.scatter(x, y)
     plt.show()
+
 
 class PlotBuilder:
     def __init__(self):
@@ -268,7 +284,8 @@ class PlotBuilder:
             ax.set_ylabel(self.y_label)
             ax.set_zlabel(self.z_label)
             ax.scatter3D(self.x, self.y, self.z, c=self.c, cmap=self.c_map)
-            #ax.plot(self.x, self.y, self.z)
+            # ax.plot(self.x, self.y, self.z)
+
 
 def solve_stats(range):
     query_builder = QueryBuilder()
@@ -277,6 +294,7 @@ def solve_stats(range):
     query = query_builder.build()
     result_builder = ResultBuilder(query)
     return result_builder.solve()
+
 
 def plot_stats(queryResult, cmap):
     plotBuilder = PlotBuilder()
@@ -288,5 +306,4 @@ def plot_stats(queryResult, cmap):
     plotBuilder.set_c_map(cmap)
     plotBuilder.build()
 
-    
 # %%
