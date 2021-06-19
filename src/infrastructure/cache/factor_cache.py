@@ -1,6 +1,6 @@
-from src.computation_engine.components.core.base_core import BaseCore
+from src.infrastructure.core.base_core import BaseCore
 from src.infrastructure.cache.omni_cache import OmniCache, CacheElement, CacheStatus
-from src.infrastructure.types.omni_integer import OmniInteger, IntegerEnum
+from src.structure.sets.integers.omni_integer import OmniInteger, IntegerEnum
 
 from enum import Enum
 
@@ -42,7 +42,7 @@ class FactorCache(OmniCache):
     def get_cache(self, n: OmniInteger) -> FactorCollectionCache:
         has_cache = self.has_cache(n)
         if has_cache:
-            return self.__cache[n]
+            return super().get_cache()[n]
         return FactorCollectionCache(n, self.get_core(), CacheStatus.Miss)
 
     def upsert_cache(self, n: OmniInteger, f_set: dict) -> FactorCollectionCache:

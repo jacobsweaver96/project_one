@@ -1,4 +1,4 @@
-from src.computation_engine.components.core.base_core import BaseCore
+from src.infrastructure.core.base_core import BaseCore
 from src.infrastructure.cache.unity_cache import UnityCache
 
 

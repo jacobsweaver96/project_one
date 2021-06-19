@@ -1,6 +1,6 @@
-from src.computation_engine.components.core.base_core import BaseCore
+from src.infrastructure.core.base_core import BaseCore
 from src.infrastructure.cache.omni_cache import OmniCache, CacheElement, CacheStatus
-from src.infrastructure.types.omni_integer import OmniInteger
+from src.structure.sets.integers.omni_integer import OmniInteger
 
 
 class TotientCacheElement(CacheElement):
@@ -36,7 +36,7 @@ class TotientCache(OmniCache):
         super().get_cache()[n] = t_cache
         if isinstance(totient_log, OmniInteger):
             tail_cache = self.get_totient_cache(totient)
-            if tail_cache.has_value():
+            if tail_cache.has_value() and not tail_cache.get_log().has_value():
                 tail_src = tail_cache.get_source()
                 tail_val = tail_cache.get_value()
                 self.upsert_cache(tail_src, tail_val, self.get_core().sub(totient_log, self.get_core().m_identity))

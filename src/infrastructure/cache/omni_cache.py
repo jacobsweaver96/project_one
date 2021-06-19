@@ -1,6 +1,6 @@
 from enum import Enum
-from src.computation_engine.components.core.base_core import BaseCore
-from src.infrastructure.types.omni_integer import OmniInteger
+from src.infrastructure.core.base_core import BaseCore
+from src.structure.sets.integers.omni_integer import OmniInteger
 
 
 class CacheStatus(Enum):

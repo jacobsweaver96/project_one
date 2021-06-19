@@ -1,7 +1,7 @@
-from src.computation_engine.components.core.base_core import BaseCore
+from src.infrastructure.core.base_core import BaseCore
 from src.infrastructure.cache.unity_cache import UnityCache
 from src.infrastructure.omni_component import OmniComponent
-from src.infrastructure.types.omni_integer import OmniInteger, IntegerEnum
+from src.structure.sets.integers.omni_integer import OmniInteger, IntegerEnum
 
 
 class CompatibilityComponent(OmniComponent):
